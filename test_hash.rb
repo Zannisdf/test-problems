@@ -53,15 +53,14 @@ def show_stock_zero(products)
 end
 
 def show_product_existence(products, prod_to_verify)
-  puts products.keys.include? prod_to_verify ? 'Sí.' : 'No.'
+  puts products.key?(prod_to_verify) ? 'Si' : 'No'
 end
 
-
 products = read_products('inventario.csv').map { |prod| [prod.first, prod[1..-1]] }.to_h
-
-menu
-input = gets.to_i
-while input > 0 && input < 7
+ask = true
+while ask
+  menu
+  input = gets.to_i
   if input == 1
     show_products(products)
   elsif input == 2
@@ -74,9 +73,12 @@ while input > 0 && input < 7
     show_stock_zero(products)
   elsif input == 6
     puts 'Ingrese el producto a verificar:'
-    product = gets.chomp
+    prod_to_verify = gets.chomp
     show_product_existence(products, prod_to_verify)
+  elsif input == 7
+    puts 'Adios!'
+    ask = false
+  else
+    puts 'Opción inválida.'
   end
-  input = 8
-
 end
